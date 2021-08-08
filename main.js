@@ -68,15 +68,17 @@ window.addEventListener('DOMContentLoaded', () => {
         });
 
         input.addEventListener('blur', () => {
-            checkMinValue(totalCostInput, totalCostRange, 0);
-            checkMinValue(anInitialFeeInput, anInitialFeeRange, 100000);
-            checkMinValue(creditTermInput, creditTermRange, 1);
+            checkMinValue(totalCostInput, totalCostRange);
+            checkMinValue(anInitialFeeInput, anInitialFeeRange);
+            checkMinValue(creditTermInput, creditTermRange);
 
             calc(totalCostRange.value, anInitialFeeRange.value, creditTermRange.value);
         });
     }
 
-    function checkMinValue(input, range, minValue) {
+    function checkMinValue(input, range) {
+        const minValue = range.getAttribute('min');
+    
         if(input.value) {
             if(input.value < minValue) {
                 input.value = minValue;
@@ -112,11 +114,13 @@ window.addEventListener('DOMContentLoaded', () => {
         const monthlyPaymentRounded = Math.round(monthlyPayment);
 
         if(monthlyPaymentRounded < 0) {
-            return false;
+            totalAmountOfCredit.innerHTML = `0₽`;
+            totalMonthlyPayment.innerHTML = `0₽`;
+            totalRecommendedIncome.innerHTML = `0₽`;
         } else {
             totalAmountOfCredit.innerHTML = `${amountOfCredit}₽`;
             totalMonthlyPayment.innerHTML = `${monthlyPaymentRounded}₽`;
-            totalRecommendedIncome.innerHTML = `${monthlyPaymentRounded + ((monthlyPaymentRounded / 100) * 35)}₽`;
+            totalRecommendedIncome.innerHTML = `${Math.round(monthlyPaymentRounded + ((monthlyPaymentRounded / 100) * 35))}₽`;
         }
     }
 
