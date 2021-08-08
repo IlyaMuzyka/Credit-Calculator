@@ -1,5 +1,3 @@
-'use strict';
-
 window.addEventListener('DOMContentLoaded', () => {
 
     const totalCostInput = document.getElementById('total-cost'),
